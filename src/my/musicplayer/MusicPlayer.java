@@ -110,8 +110,14 @@ public class MusicPlayer
     {
         if(player != null && position >= 0 && position < player.getLength()) {
             // Set the player's position.
+        try {   
+         player.setPosition(position);
         }
-            
+         catch(JavaLayerException e) {
+                        reportProblem();
+                        killPlayer();
+                    }
+        }
     }
     
     /**

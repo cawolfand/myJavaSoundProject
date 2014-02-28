@@ -4,7 +4,6 @@
  */
 package myjavasoundproject;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -18,7 +17,6 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
@@ -30,17 +28,17 @@ import my.trackreader.TrackReader;
 import customComponents.MyButton;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JSlider;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+
 /**
  *
  * @author Carol
  */
-
-
 class MyCustomFilter extends javax.swing.filechooser.FileFilter {
 
     @Override
@@ -76,11 +74,11 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
      * Creates new form myJavaSoundProjectUI
      */
     public myJavaSoundProjectUI() {
-       initMyComponents();
+        initMyComponents();
         initComponents();
         //instance table model   TableColumn trackColumn = songTable.getColumnModel().getColumn(2);
-      
-              
+
+
 //        songTable.addKeyListener(new KeyListener() {
 //            public void actionPerformed(KeyEvent e){
 //                JOptionPane.showMessageDialog(songTable, "Don't do that");
@@ -111,16 +109,27 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
                 tick();
             }
         });
-        jProgressBar1.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                int value = jProgressBar1.getValue();
-                // Update the time label
-                time.setText(value / 1000 + "."
-                        + (value % 1000) / 100);
-                // If we're not already there, skip there.
-                // if (value != audioPosition) skip(value);
-            }
-        });
+//        jProgressSlider.addChangeListener(new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                int value = jProgressBar1.getValue();
+//                // Update the time label
+//                jNowPlayingLabel.setText(value / 1000 + "."
+//                        + (value % 1000) / 100);
+//                // If we're not already there, skip there.
+//                // if (value != audioPosition) skip(value);
+//                if (!jProgressSlider.getValueIsAdjusting()) {
+//                    int val = (int) jProgressSlider.getValue();
+//
+//                    int sval = (int) (player.getLength() * val / 100);
+//                    System.out.print("Slider sval = " + sval);
+//                    player.seekTo(val);
+//                    player.resume();
+//                } else {
+//                    player.pause();
+//                }
+//            }
+//        });
+
         String[] ordering = Track.FIELDS;
         //   for (int i=0; i<ordering.length; i++){
         //       jSortByCombo.addItem(ordering[i]);
@@ -132,34 +141,35 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
-               
-        directoryTree.getSelectionModel().setSelectionMode
-                (TreeSelectionModel.SINGLE_TREE_SELECTION);
- 
-      
- 
+
+
+        directoryTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+        ImageIcon img = new ImageIcon("C:\\Users\\Carol\\Documents\\NetBeansProjects\\myJavaSoundProject3\\myJavaSoundProject\\images\\2ts Icon2.png");
+        setIconImage(img.getImage());
+        //jLabel2.setIcon(img);
+
         fillTable2();
     }
-   
-    private void initMyComponents(){
+
+    private void initMyComponents() {
         Object[][] rowData = {};
-        Object[] columnNames = {"Artist", "Album","TrackNum","Title","Length","Genre"};
-        
-        myPlayButton =new MyButton("images\\playChrome.png");
+        Object[] columnNames = {"Artist", "Album", "TrackNum", "Title", "Length", "Genre"};
+
+        myPlayButton = new MyButton("images\\playChrome.png");
         myPlayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPlayButtonActionPerformed(evt);
             }
         });
         this.add(myPlayButton);
-        
-        
-        myDefaultTableModel = new MyDefaultTableModel(columnNames, 1);  
-        
-            
-        
-           
+
+
+        myDefaultTableModel = new MyDefaultTableModel(columnNames, 1);
+
+
+
+
     }
 
     /**
@@ -175,19 +185,25 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         jTable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         directoryTree = new javax.swing.JTree();
-        jNextButton = new javax.swing.JButton();
-        jPrevButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         songTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPlayButton = new javax.swing.JButton();
         jStopButton = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        time = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPauseButton = new javax.swing.JButton();
-        jSortByCombo = new javax.swing.JComboBox();
+        jNextButton = new javax.swing.JButton();
+        jPrevButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jNowPlayingLabel1 = new javax.swing.JLabel();
+        jGainSlider = new javax.swing.JSlider();
+        jPanSlider = new javax.swing.JSlider();
+        jPanel4 = new javax.swing.JPanel();
+        jNowPlayingLabel = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressSlider = new javax.swing.JSlider();
+        jLabelTime = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jOpenMenu = new javax.swing.JMenuItem();
@@ -249,20 +265,6 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         });
         jScrollPane3.setViewportView(directoryTree);
 
-        jNextButton.setText("Next");
-        jNextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jNextButtonActionPerformed(evt);
-            }
-        });
-
-        jPrevButton.setText("Prev");
-        jPrevButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPrevButtonActionPerformed(evt);
-            }
-        });
-
         songTable.setBackground(new java.awt.Color(51, 0, 102));
         songTable.setFont(new java.awt.Font("Tekton Pro", 0, 14)); // NOI18N
         songTable.setForeground(new java.awt.Color(255, 255, 153));
@@ -292,10 +294,6 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
             }
         });
 
-        time.setText("jLabel1");
-
-        jLabel1.setText("Sort By");
-
         jPauseButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carol\\Documents\\NetBeansProjects\\myJavaSoundProject2\\images\\pause3.png")); // NOI18N
         jPauseButton.setToolTipText("Pause");
         jPauseButton.setBorder(null);
@@ -307,10 +305,24 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
             }
         });
 
-        jSortByCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artist", "Album", "Title" }));
-        jSortByCombo.addActionListener(new java.awt.event.ActionListener() {
+        jNextButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carol\\Documents\\NetBeansProjects\\myJavaSoundProject3\\myJavaSoundProject\\images\\next.png")); // NOI18N
+        jNextButton.setBorder(null);
+        jNextButton.setBorderPainted(false);
+        jNextButton.setContentAreaFilled(false);
+        jNextButton.setOpaque(false);
+        jNextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSortByComboActionPerformed(evt);
+                jNextButtonActionPerformed(evt);
+            }
+        });
+
+        jPrevButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carol\\Documents\\NetBeansProjects\\myJavaSoundProject3\\myJavaSoundProject\\images\\prev.png")); // NOI18N
+        jPrevButton.setBorder(null);
+        jPrevButton.setBorderPainted(false);
+        jPrevButton.setContentAreaFilled(false);
+        jPrevButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPrevButtonActionPerformed(evt);
             }
         });
 
@@ -319,46 +331,121 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPlayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPrevButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPauseButton)
+                .addComponent(jPlayButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jStopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jStopButton)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(time)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSortByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addComponent(jNextButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(time)
-                    .addComponent(jLabel1)
-                    .addComponent(jSortByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(jPlayButton, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-            .addComponent(jStopButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPauseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jNextButton)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jStopButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPauseButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPlayButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPrevButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carol\\Documents\\NetBeansProjects\\myJavaSoundProject3\\myJavaSoundProject\\images\\ts Icon3.png")); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 134, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        jNowPlayingLabel1.setText("label");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jGainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jNowPlayingLabel1)))
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jNowPlayingLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jGainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jNowPlayingLabel.setText("label");
+
+        jProgressSlider.setToolTipText("");
+        jProgressSlider.setValue(0);
+        jProgressSlider.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jProgressSliderMouseDragged(evt);
+            }
+        });
+
+        jLabelTime.setText("jLabel1");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jNowPlayingLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelTime))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jProgressSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jNowPlayingLabel)
+                    .addComponent(jLabelTime))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jProgressSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jMenu1.setText("File");
@@ -416,51 +503,44 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPrevButton)
-                                .addGap(29, 29, 29)
-                                .addComponent(jNextButton)
-                                .addGap(90, 90, 90))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(9, 9, 9)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 681, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 86, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(747, 747, 747)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jNextButton)
-                                    .addComponent(jPrevButton)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50))
         );
 
         pack();
@@ -521,8 +601,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser.getSelectedFile();
             ArrayList<Track> addedTracks = organizer.readLibrary(file.getPath());
-            for (Track track : addedTracks){
-                Object[] rowData = {track.getAlbum(), track.getArtist(), track.getTrackNum(), track.getTitle(),track.getLength()};
+            for (Track track : addedTracks) {
+                Object[] rowData = {track.getAlbum(), track.getArtist(), track.getTrackNum(), track.getTitle(), track.getLength()};
                 myDefaultTableModel.addRow(rowData);
             }
             fillTable2();
@@ -533,72 +613,6 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 
         }
     }//GEN-LAST:event_jOpenNewActionPerformed
-
-    private void jPlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayButtonActionPerformed
-        // TODO add your handling code here:
-        int row, i, temp;
-        String selectedTitle;
-        File selectedFile;
-        Track t;
-
-
-
-        if (timer.isRunning()) {
-            timer.stop();
-        }
-
-        row = songTable.getSelectedRow();
-        selectedTitle = (String) songTable.getValueAt(row, 3);
-        i = organizer.getTrack(selectedTitle);
-        t = organizer.getTrack(i);
-
-        player.startPlaying(t.getFilename());
-        timer.start();
-        temp = player.getLength();
-        jProgressBar1.setMaximum(player.getLength());
-        // jProgressBar1.setMaximum(player.getLength());        
-    }//GEN-LAST:event_jPlayButtonActionPerformed
-
-    private void jPauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseButtonActionPerformed
-        // TODO add your handling code here:
-
-        if (player.isPlaying()) {
-            player.pause();
-        } else {
-            player.resume();
-        }
-    }//GEN-LAST:event_jPauseButtonActionPerformed
-
-    private void jStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopButtonActionPerformed
-        // TODO add your handling code here:
-        player.stop();
-        timer.stop();
-    }//GEN-LAST:event_jStopButtonActionPerformed
-
-    private void jSortByComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSortByComboActionPerformed
-        // TODO add your handling code here:
-        JComboBox cb = (JComboBox) evt.getSource();
-        String ordering = (String) cb.getSelectedItem();
-        sortMode = ordering;
-        if (ordering != null) {
-            setListOrdering(ordering);
-        }
-    }//GEN-LAST:event_jSortByComboActionPerformed
-
-    private void jNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNextButtonActionPerformed
-        // TODO add your handling code here:
-        int i;
-        Track t;
-        int k, m;
-
-        if (pageIndex + 1 == (int) organizer.getNumberOfTracks() / 20) {
-            pageIndex++;
-            jNextButton.setVisible(false);
-            i = pageIndex;
-
-            fillTable2();
-        }
-    }//GEN-LAST:event_jNextButtonActionPerformed
 
     private void jPrevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrevButtonActionPerformed
         // TODO add your handling code here:
@@ -626,44 +640,135 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 
     private void directoryTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_directoryTreeValueChanged
         // TODO add your handling code here:
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-                           directoryTree.getLastSelectedPathComponent();
- 
-        if (node == null) return;
-        
- 
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) directoryTree.getLastSelectedPathComponent();
+
+        if (node == null) {
+            return;
+        }
+
+
         Object nodeInfo = node.getUserObject();
         setListOrdering((String) nodeInfo);
-            
-               
+
+
     }//GEN-LAST:event_directoryTreeValueChanged
 
-    
-    private  void initTable(){
-              int n = organizer.getNumberOfTracks();
+    private void jNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNextButtonActionPerformed
+        // TODO add your handling code here:
+        int i;
         Track t;
-       
+        int k, m;
+
+        if (pageIndex + 1 == (int) organizer.getNumberOfTracks() / 20) {
+            pageIndex++;
+            jNextButton.setVisible(false);
+            i = pageIndex;
+
+            fillTable2();
+        }
+    }//GEN-LAST:event_jNextButtonActionPerformed
+
+    private void jPauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseButtonActionPerformed
+        // TODO add your handling code here:
+
+        if (player.isPlaying()) {
+            player.pause();
+        } else {
+            player.resume();
+        }
+    }//GEN-LAST:event_jPauseButtonActionPerformed
+
+    private void jStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopButtonActionPerformed
+        // TODO add your handling code here:
+        player.stop();
+        timer.stop();
+    }//GEN-LAST:event_jStopButtonActionPerformed
+
+    private void jPlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayButtonActionPerformed
+        // TODO add your handling code here:
+        int row, i, temp;
+        String selectedTitle;
+        File selectedFile;
+        Track t;
+
+        if (timer.isRunning()) {
+            timer.stop();
+        }
+
+        row = songTable.getSelectedRow();
+        int realColumnIndex = songTable.convertColumnIndexToModel(3);
+
+        selectedTitle = (String) songTable.getValueAt(row, realColumnIndex);
+        i = organizer.getTrack(selectedTitle);
+        t = organizer.getTrack(i);
+
+        player.startPlaying(t.getFilename());
+      
+        temp = player.getLength();
+        jProgressBar1.setMaximum(player.getLength());
+        jProgressSlider.setMaximum(player.getLength());
+        jNowPlayingLabel.setText(selectedTitle);
+          timer.start();
+          // jProgressBar1.setMaximum(player.getLength());
+    }//GEN-LAST:event_jPlayButtonActionPerformed
+
+    private void jProgressSliderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProgressSliderMouseDragged
+        // TODO add your handling code here:
+        
+       boolean state;
+        JSlider source = (JSlider)evt.getSource();
+        state = source.getValueIsAdjusting();
+        //int val = source.getValue();
+        timer.stop();
+        player.pause();
+        int val = (int) source.getValue();
+        jLabelTime.setText(Integer.toString(val));
+        player.seekTo(val);
+        player.resume();
+        timer.start();
+//    if (!source.getValueIsAdjusting()) {
+//        
+//                 
+//               int val = (int) source.getValue();
+//jLabelTime.setText(Integer.toString(val));
+//                    int sval = (int) (player.getLength() * val / 100);
+//                    System.out.print("Slider sval = " + sval);
+//                    player.seekTo(val);
+//                    player.resume();
+//                    timer.start();
+//        }
+//        else{
+//            timer.stop();
+//            player.pause();
+//        }
+        
+    }//GEN-LAST:event_jProgressSliderMouseDragged
+
+    private void initTable() {
+        int n = organizer.getNumberOfTracks();
+        Track t;
+
         TableColumn trackColumn = songTable.getColumnModel().getColumn(2);
         trackColumn.setPreferredWidth(5);
-      
-       
-       for(int i = 1; i < n ; i++){
-           t = organizer.getTrack(i);
-           String rowString = "Quiz #" + i;
-           myDefaultTableModel.addRow(new Object[]{t.getAlbum(),
-                                                    t.getArtist(),
-                                                    t.getTitle(),
-                                                    t.getTrackNum(),
-                                                    t.getLength(),
-                                                    ""});
-           
-       }
-        
-     
 
-       
+
+        for (int i = 1; i < n; i++) {
+            t = organizer.getTrack(i);
+            String rowString = "Quiz #" + i;
+            myDefaultTableModel.addRow(new Object[]{t.getAlbum(),
+                t.getArtist(),
+                t.getTitle(),
+                t.getTrackNum(),
+                t.getLength(),
+                ""});
+
+        }
+
+
+
+
     }
-    
+
     private void fillTable() {
         int i;
         Track t;
@@ -681,17 +786,17 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         for (i = 0; i < 20; i++) {
             if (i < k) {
                 t = trackList.get(i + pageIndex * 20);
-                if (i == 0){
+                if (i == 0) {
                     lastAlbum = t.getAlbum();
                     songTable.setValueAt(t.getAlbum(), i, 0);
                 }
-                if ( !lastAlbum.equals(t.getAlbum())){
-                     songTable.setValueAt(t.getAlbum(),i,0);
-                     lastAlbum = t.getAlbum();
-                   
+                if (!lastAlbum.equals(t.getAlbum())) {
+                    songTable.setValueAt(t.getAlbum(), i, 0);
+                    lastAlbum = t.getAlbum();
+
                 }
-                
-                
+
+
                 songTable.setValueAt(t.getArtist(), i, 1);
                 songTable.setValueAt(t.getTrackNum(), i, 2);
                 songTable.setValueAt(t.getTitle(), i, 3);
@@ -706,17 +811,17 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         }
 
     }
-private void fillTable2() {
+
+    private void fillTable2() {
         int i;
         Track t;
         int k, m;
         String lastAlbum = new String();
         List<Track> trackList = organizer.getAllTracks();
         m = organizer.getNumberOfTracks();
-        
-        if ( m != songTable.getRowCount()){
+
+        if (m != songTable.getRowCount()) {
             //songs must have been added
-            
         }
 
         if (pageIndex * 20 + 19 < m) {
@@ -726,18 +831,19 @@ private void fillTable2() {
         }
         lastAlbum = "";
         for (i = 0; i < m; i++) {
-                t = trackList.get(i + pageIndex * 20);
-                           
-                songTable.setValueAt(t.getAlbum(),i,0);
-                songTable.setValueAt(t.getArtist(), i, 1);
-                songTable.setValueAt(t.getTrackNum(), i, 2);
-                songTable.setValueAt(t.getTitle(), i, 3);
-                songTable.setValueAt(t.getLength(), i, 4);
-           
-              
+            t = trackList.get(i + pageIndex * 20);
+
+            songTable.setValueAt(t.getAlbum(), i, 0);
+            songTable.setValueAt(t.getArtist(), i, 1);
+            songTable.setValueAt(t.getTrackNum(), i, 2);
+            songTable.setValueAt(t.getTitle(), i, 3);
+            songTable.setValueAt(t.getLength(), i, 4);
+
+
         }
 
     }
+
     /**
      * Set the ordering of the track list.
      *
@@ -777,9 +883,11 @@ private void fillTable2() {
 
         audioPosition = (int) (player.getFrame());
 
-        jProgressBar1.setValue(audioPosition);
-
-        int i = jProgressBar1.getValue();
+   //     jProgressBar1.setValue(audioPosition);
+        jProgressSlider.setValue(audioPosition);
+   jLabelTime.setText(Integer.toString(audioPosition));
+  //      int i = jProgressBar1.getValue();
+        
 
         // else reset( );  
     }
@@ -810,32 +918,22 @@ private void fillTable2() {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(myJavaSoundProjectUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -852,58 +950,65 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
     private javax.swing.JMenuItem jCreateDBItem;
     private javax.swing.JMenuItem jDeleteMenu;
     private javax.swing.JMenuItem jExitMenu;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JSlider jGainSlider;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelTime;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JButton jNextButton;
+    private javax.swing.JLabel jNowPlayingLabel;
+    private javax.swing.JLabel jNowPlayingLabel1;
     private javax.swing.JMenuItem jOpenMenu;
     private javax.swing.JMenuItem jOpenNew;
+    private javax.swing.JSlider jPanSlider;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JButton jPauseButton;
     private javax.swing.JButton jPlayButton;
     private javax.swing.JButton jPrevButton;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JSlider jProgressSlider;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JComboBox jSortByCombo;
     private javax.swing.JButton jStopButton;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable songTable;
-    private javax.swing.JLabel time;
     // End of variables declaration//GEN-END:variables
-   public class MyDefaultTableModel extends DefaultTableModel{
-       public MyDefaultTableModel(Object[] colNames,int r){
-           super(colNames,r);
-       }
-       Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, 
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+    public class MyDefaultTableModel extends DefaultTableModel {
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-       
-   }
+        public MyDefaultTableModel(Object[] colNames, int r) {
+            super(colNames, r);
+        }
+        Class[] types = new Class[]{
+            java.lang.String.class, java.lang.String.class, java.lang.String.class,
+            java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+        };
+        boolean[] canEdit = new boolean[]{
+            false, false, false, false, false, false
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types[columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit[columnIndex];
+        }
+    }
     private MyButton myPlayButton;
-    
+
     @Override
-        public void stateChanged(ChangeEvent e) {
+    public void stateChanged(ChangeEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -921,6 +1026,4 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
     public void keyReleased(KeyEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
 }
