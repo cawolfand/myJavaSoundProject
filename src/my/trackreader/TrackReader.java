@@ -90,9 +90,9 @@ public class TrackReader
         String title = "unknown";
         String album = "unknown";
         String t;
-        int tracknum =0;
+        String tracknum = "";
         long length =0;
-      
+        String genre = "";
         
         // Look for artist and title in the name of the file.
         String details = file.getName();
@@ -106,15 +106,15 @@ public class TrackReader
             } catch (IOException ex) {
                 Logger.getLogger(myJavaSoundProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Map properties =  baseFileFormat.properties();
-            artist = (String) properties.get("author");
-            album = (String) properties.get("album");
-            t = (String) properties.get("mp3.id3tag.track");
-            tracknum = Integer.valueOf(t);
-            title = (String) properties.get("title");
-            length = (long) properties.get("duration");
-            
+            Map props =  baseFileFormat.properties();
+            if (props.containsKey("title")) title = (String) props.get("title");
+            if (props.containsKey("author")) artist = (String) props.get("author");
+            if (props.containsKey("album")) album = (String) props.get("album");
+        
+            if (props.containsKey("mp3.id3tag.track")) tracknum = (String) props.get("mp3.id3tag.track");
+            if (props.containsKey("duration"))length = (long) props.get("duration");
+            if (props.containsKey("mp3.id3tag.genre")) genre = (String) props.get("mp3.id3tag.genre");
                    
-        return new Track(artist, album, title, tracknum, length, file.getAbsolutePath());
+        return new Track(artist, album, title, tracknum, length, file.getAbsolutePath(),genre);
     }
 }

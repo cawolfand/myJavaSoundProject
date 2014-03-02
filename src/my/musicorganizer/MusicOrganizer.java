@@ -331,7 +331,7 @@ public class MusicOrganizer {
                 }
                 n = Integer.valueOf(objData[4]);
                 l = Long.valueOf(objData[6]);
-                newtracks[numberOfTracks] = new Track(objData[2], objData[1], objData[3], n, l, objData[5]);
+                newtracks[numberOfTracks] = new Track(objData[2], objData[1], objData[3],objData[4], l, objData[5], objData[7]);
 
                 addTrack(newtracks[numberOfTracks]);
                 numberOfTracks++;

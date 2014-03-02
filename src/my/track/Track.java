@@ -14,10 +14,11 @@ import java.io.File;
 public class Track {
     private String album;
     private String artist;
-    private int tracknum;
+    private String tracknum;
     private String title;
     private long length;
     private String filename;
+    private String genre;
     
     public static final String[] FIELDS = {
         "Artist",
@@ -26,11 +27,12 @@ public class Track {
         "TrackNum",
         "Length",
         "Filename",
+        "Genre"
     };
     
     
-    public Track(String artist, String album, String title, int trackNum, long length, String filename){
-        SetDetails(artist, album, title, trackNum, length, filename);
+    public Track(String artist, String album, String title, String trackNum, long length, String filename, String genre){
+        SetDetails(artist, album, title, trackNum, length, filename, genre);
         
     }
     
@@ -42,16 +44,17 @@ public class Track {
      */
     public Track(String filename)
     {
-        SetDetails("unknown", "unknown", "unknown", 0, 0, filename);
+        SetDetails("unknown", "unknown", "unknown", "", 0, filename, genre);
     }
     
-    private void SetDetails(String artist, String album, String title, int trackNum, long length, String filename){
+    private void SetDetails(String artist, String album, String title, String trackNum, long length, String filename, String genre){
         this.artist = artist;
         this.album = album;
         this.title = title;
         this.tracknum = trackNum;
         this.length = length;
         this.filename = filename;
+        this.genre = genre;
     }
     
     public String getArtist()
@@ -68,7 +71,7 @@ public class Track {
         
     }
     
-    public int getTrackNum(){
+    public String getTrackNum(){
         return tracknum;
         
     }
@@ -79,6 +82,10 @@ public class Track {
     
     public String getFilename(){
         return filename;
+    }
+    
+    public String getGenre(){
+        return genre;
     }
     
     public String getField(String field)
@@ -93,13 +100,16 @@ public class Track {
             return album;
         }
         else if (field.equals("TrackNum")) {
-            return Integer.toString(tracknum);
+            return tracknum;
         }
         else if (field.equals("Length")) {
             return Integer.toString((int)length/3600);
         }
         else if (field.equals("Filename")){
             return filename;
+        }
+        else if (field.equals("Genre")){
+            return genre;
         }
         else {
             throw new IllegalArgumentException("Unkown field name: " + field);
