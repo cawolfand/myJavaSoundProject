@@ -29,7 +29,7 @@ public class Track {
         "Filename",
         "Genre"
     };
-    
+    public Track(){}
     
     public Track(String artist, String album, String title, String trackNum, long length, String filename, String genre){
         SetDetails(artist, album, title, trackNum, length, filename, genre);
