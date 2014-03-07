@@ -2,15 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.musicplayer;
+package my.audioplayer;
 
 /**
  *
  * @author Carol
  */
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import javazoom.jl.decoder.JavaLayerException;
-
-import my.musicfileplayer.MusicFilePlayer;
+import my.AudioFilePlayer.AudioFilePlayer;
+//import my.musicfileplayer.MusicFilePlayer;
 
 /**
  * Provide basic playing of MP3 files via the javazoom library.
@@ -19,22 +23,20 @@ import my.musicfileplayer.MusicFilePlayer;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class MusicPlayer
+public class AudioPlayer
 {
     // The current player. It might be null.
-    private MusicFilePlayer player;
+    private AudioFilePlayer player;
     // The current file being played.
     private String filename;
-    //
-       
+    
     /**
      * Constructor for objects of class MusicPlayer
      */
-    public MusicPlayer()
+    public AudioPlayer()
     {
         player = null;
         filename = "";
-        
     }
     
     /**
@@ -67,16 +69,12 @@ public class MusicPlayer
     /**
      * Pause the current file.
      */
-    public void pause()
+    public void pause() 
     {
         if(player != null) {
-            try {
+            
                 player.pause();
-            }
-            catch(JavaLayerException e) {
-                reportProblem();
-                killPlayer();
-            }
+          
         }
     }
     
@@ -85,21 +83,20 @@ public class MusicPlayer
      */
     public void resume()
     {
-        if(player != null) {
-            Thread playerThread = new Thread() {
-                public void run()
-                {
-                    try {
-                        player.resume();
-                    }
-                    catch(JavaLayerException e) {
-                        reportProblem();
-                        killPlayer();
-                    }
-                }
-            };
-            playerThread.setPriority(Thread.MIN_PRIORITY);
-            playerThread.start();
+//        if(player != null) {
+//            Thread playerThread = new Thread() {
+//                public void run()
+//                {
+//                   
+//                        player.resume();
+//                    
+//                }
+//            };
+//            playerThread.setPriority(Thread.MIN_PRIORITY);
+//            playerThread.start();
+//        }
+        if (player != null){
+            player.resume();
         }
     }
     
@@ -111,16 +108,16 @@ public class MusicPlayer
      */
     public void seekTo(int position)
     {
-        if(player != null && position >= 0 && position < player.getLength()) {
-            // Set the player's position.
-        try {   
-         player.setPosition(position);
-        }
-         catch(JavaLayerException e) {
-                        reportProblem();
-                        killPlayer();
-                    }
-        }
+//        if(player != null && position >= 0 && position < player.getLength()) {
+//            // Set the player's position.
+//        try {   
+//         player.setPosition(position);
+//        }
+//         catch(JavaLayerException e) {
+//                        reportProblem();
+//                        killPlayer();
+//                    }
+//        }
     }
     
     /**
@@ -131,22 +128,24 @@ public class MusicPlayer
      */
     public int getLength()
     {
-        if(player != null) {
-            return player.getLength();
-        }
-        else {
-            return 0;
-        }
+//        if(player != null) {
+//            return player.getLength();
+//        }
+//        else {
+//            return 0;
+//        }
+        return 0;
     }
     
     public int getFrame()
     {
-        if(player != null){
-            return player.getFrameNumber();
-        }
-        else {
-            return 0;
-        }
+//        if(player != null){
+//            return player.getFrameNumber();
+//        }
+//        else {
+//            return 0;
+//        }
+        return 0;
     }
     
     /**
@@ -160,7 +159,7 @@ public class MusicPlayer
                 killPlayer();
             }
             this.filename = filename;
-            player = new MusicFilePlayer(filename);
+            player = new AudioFilePlayer(filename);
         }
         catch(JavaLayerException e) {
             System.out.println("Problem setting up player");
@@ -177,11 +176,12 @@ public class MusicPlayer
      */
     private void playFrom(final int start) throws JavaLayerException
     {
+       
         Thread playerThread = new Thread() {
             public void run()
             {
                 try {
-                    player.playFrom(start);
+                    player.play(start);
                 }
                 catch(JavaLayerException e) {
                     reportProblem();
@@ -215,9 +215,8 @@ public class MusicPlayer
         System.out.println("There was a problem playing: " + filename);
     }
     
-     /**
-     * Return the gain of the audio line.
-     */
-  
+    public float getGain(){
+        return player.getGain();
+    }
 }
 

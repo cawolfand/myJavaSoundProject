@@ -25,36 +25,23 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import static javax.sound.sampled.AudioSystem.getAudioInputStream;
 import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
-import javax.sound.sampled.Control;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
+import javazoom.jl.decoder.BitstreamException;
 import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.AudioDevice;
 
 public class AudioFilePlayer {
 
     private boolean playing;
-    private boolean paused;
     private String filename;
-    private SourceDataLine line;
-    private float gain;
-    // The position to resume, if any.
-    private int resumePosition;
 
     public AudioFilePlayer() {
         playing = false;
-        paused = false;
     }
-
-    public static void main(String[] args) {
-        final AudioFilePlayer player = new AudioFilePlayer();
-       // player.play("C:\\Users\\Carol\\Music\\Ana Egge\\River Under the Road\\01 River Under the Road.mp3");
-        // player.play("something.ogg");
-    }
-
-    public AudioFilePlayer(String f) throws JavaLayerException {
+ public AudioFilePlayer(String f) throws JavaLayerException {
         this.filename = f;
         playing = false;
-        paused = false;
+        
 //        openAudio();
 //        frameCount = getFrameCount(f);
 //         // Open a fresh bitstream following the frame count.
@@ -64,54 +51,54 @@ public class AudioFilePlayer {
 //        resumePosition = -1;  
 
     }
+ 
+    public static void main(String[] args) {
+        final AudioFilePlayer player = new AudioFilePlayer();
+        player.play("C:\\Users\\Carol\\Music\\Ana Egge\\River Under the Road\\01 River Under the Road.mp3");
+        // player.play("something.ogg");
+    }
 
     public boolean isPlaying() {
         return playing;
     }
-    
-     public void resume()  {
-      synchronized (this){  
-        playing = true;
-        paused = false;
-        this.notifyAll();
-      }
-     }
-    public void pause() {
-       
-        playing = false;
-        paused = true;
-       
-    }
 
-    public void play(int start) throws JavaLayerException {
-        synchronized (this) {
-            playing = true;
-            paused = false;
-            this.notifyAll();
-            playStream();
+    public void pause() throws JavaLayerException{
+       synchronized(this) {
+            playing = false;
+          //  resumePosition = frameNumber;
         }
     }
 
-    public void playStream() {
+    public void play(String filePath) {
+        synchronized (this) {
+            playing = true;
+            this.notifyAll();
+            playStream(filePath);
+        }
+    }
+
+    public void playStream(String filePath) {
         // filePath = "C:\\Users\\Carol\\Music\\Ana Egge\\River Under the Road\\01 River Under the Road.mp3";
-        final File file = new File(filename);
+        final File file = new File(filePath);
 
         try (final AudioInputStream in = getAudioInputStream(file)) {
             synchronized (this) {
 
                 final AudioFormat outFormat = getOutFormat(in.getFormat());
                 final Info info = new Info(SourceDataLine.class, outFormat);
-                AudioInputStream din = getAudioInputStream(outFormat,in);
-                line =  (SourceDataLine) AudioSystem.getLine(info); 
+
+                try (final SourceDataLine line =
+                        (SourceDataLine) AudioSystem.getLine(info)) {
+
                     if (line != null) {
                         line.open(outFormat);
                         byte[] data = new byte[4096];
                         line.start();
                         //         stream(getAudioInputStream(outFormat, in), line);
-                      
+                        AudioInputStream din = getAudioInputStream(outFormat,in);
                         int nBytesRead;
                         while ((nBytesRead = din.read(data, 0, data.length)) != -1) {
-                            while (paused) {
+                            while (!playing) {
                                 if (line.isRunning()) {
                                     line.stop();
                                 }
@@ -128,14 +115,18 @@ public class AudioFilePlayer {
                         }
                         line.drain();
                         line.stop();
-                        line.close();
-                        din.close();
                     }
                 }
+            }
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             throw new IllegalStateException(e);
         }
-        
+        finally {
+			if(din != null) {
+				try { din.close(); } catch(IOException e) { }
+			}
+		}
+
     }
 
     private AudioFormat getOutFormat(AudioFormat inFormat) {
@@ -162,32 +153,41 @@ public class AudioFilePlayer {
         res.open(audioFormat);
         return res;
     }
-    
-    public float getGain(){
-        //Control control = line.getControl(Control.Type );
-         FloatControl volCtrl = (FloatControl)line.getControl(
-                            FloatControl.Type.MASTER_GAIN);
-         return volCtrl.getValue();
-    }
 
     public void stop() {
         close();
     }
 
     public void close() {
-         
+         synchronized(this) {
             if (line != null) {
                 
-                // this may fail, so ensure object state is set up before
-                // calling this method.
-                 try {
-//                    line.drain();
-                    line.stop();
-                    line.close();
-                 }
-                catch (Exception ex) {
+                try {
+                    bitstream.close();
                 }
-                
+                catch (BitstreamException ex) {
+                }
+                bitstream = null;
+                decoder = null;
             }
-           }
-}
+        }
+    }
+          /**
+     * Resume the playing.
+     */
+        
+    public void resume() throws JavaLayerException {
+        if (!playing) {
+            int start;
+//            if (resumePosition >= 0) {
+//                start = resumePosition;
+//            } else {
+//                start = frameNumber;
+//            }
+//            resumePosition = -1;
+//            playFrames(start, frameCount);
+        }
+    }
+    
+
+    }

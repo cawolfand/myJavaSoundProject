@@ -2,15 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.musicplayer;
+package my.audioplayer;
 
 /**
  *
  * @author Carol
  */
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import javazoom.jl.decoder.JavaLayerException;
-
-import my.musicfileplayer.MusicFilePlayer;
+import my.AudioFilePlayer.AudioFilePlayer;
+//import my.musicfileplayer.MusicFilePlayer;
 
 /**
  * Provide basic playing of MP3 files via the javazoom library.
@@ -19,22 +23,20 @@ import my.musicfileplayer.MusicFilePlayer;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class MusicPlayer
+public class AudioPlayer
 {
     // The current player. It might be null.
-    private MusicFilePlayer player;
+    private AudioFilePlayer player;
     // The current file being played.
     private String filename;
-    //
-       
+    
     /**
      * Constructor for objects of class MusicPlayer
      */
-    public MusicPlayer()
+    public AudioPlayer()
     {
         player = null;
         filename = "";
-        
     }
     
     /**
@@ -67,7 +69,7 @@ public class MusicPlayer
     /**
      * Pause the current file.
      */
-    public void pause()
+    public void pause() 
     {
         if(player != null) {
             try {
@@ -160,7 +162,7 @@ public class MusicPlayer
                 killPlayer();
             }
             this.filename = filename;
-            player = new MusicFilePlayer(filename);
+            player = new AudioFilePlayer(filename);
         }
         catch(JavaLayerException e) {
             System.out.println("Problem setting up player");
@@ -214,10 +216,6 @@ public class MusicPlayer
     {
         System.out.println("There was a problem playing: " + filename);
     }
-    
-     /**
-     * Return the gain of the audio line.
-     */
-  
+
 }
 
