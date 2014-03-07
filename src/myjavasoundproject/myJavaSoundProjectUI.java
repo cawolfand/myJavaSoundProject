@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+import my.audioplayer.AudioPlayer;
 
 /**
  *
@@ -62,6 +63,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
     private TrackReader reader;
     private MusicOrganizer organizer;
     private MusicPlayer player;
+    private AudioPlayer audioPlayer;
     private int currentSelection;   //indexed by songTable
     private boolean done = true;
     private Timer timer;
@@ -103,6 +105,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 //        
         organizer = new MusicOrganizer();
         player = new MusicPlayer();
+        audioPlayer = new AudioPlayer();
         // This timer calls the tick( ) method 10 times a second to keep 
         // our slider in sync with the music.
         timer = new javax.swing.Timer(100, new ActionListener() {
@@ -110,6 +113,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
                 tick();
             }
         });
+         jGainSlider.setValue(Math.round( 100*audioPlayer.getGain()));
 //        jProgressSlider.addChangeListener(new ChangeListener() {
 //            public void stateChanged(ChangeEvent e) {
 //                int value = jProgressBar1.getValue();
@@ -167,10 +171,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 
 
         myDefaultTableModel = new MyDefaultTableModel(columnNames, 1);
-
-
-
-
+    
+       
     }
 
     /**
@@ -197,6 +199,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         jPrevButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jNowPlayingLabel1 = new javax.swing.JLabel();
         jGainSlider = new javax.swing.JSlider();
@@ -357,7 +361,20 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         );
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myjavasoundproject/ts Icon3.png"))); // NOI18N
-        jLabel2.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -365,15 +382,24 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
 
         jNowPlayingLabel1.setText("label");
@@ -631,8 +657,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         if (timer.isRunning()) {
             timer.stop();
         }
-        if(player.isPlaying()){
-            player.stop();
+        if(audioPlayer.isPlaying()){
+            audioPlayer.stop();
         }
         if (currentSelection>0){
              currentSelection =  songTable.getSelectedRow()-1;
@@ -643,7 +669,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         i = organizer.getTrack(selectedTitle);
         t = organizer.getTrack(i);
 
-        player.startPlaying(t.getFilename());
+        audioPlayer.startPlaying(t.getFilename());
       
         temp = player.getLength();
         jProgressBar1.setMaximum(player.getLength());
@@ -690,8 +716,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         if (timer.isRunning()) {
             timer.stop();
         }
-        if(player.isPlaying()){
-            player.stop();
+        if(audioPlayer.isPlaying()){
+            audioPlayer.stop();
         }
         if (currentSelection < organizer.getNumberOfTracks()- 1 ){
             currentSelection = 1 + songTable.getSelectedRow();
@@ -703,7 +729,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         i = organizer.getTrack(selectedTitle);
         t = organizer.getTrack(i);
 
-        player.startPlaying(t.getFilename());
+        audioPlayer.startPlaying(t.getFilename());
       
         
         jProgressBar1.setMaximum(player.getLength());
@@ -715,17 +741,19 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
     private void jPauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseButtonActionPerformed
         // TODO add your handling code here:
 
-        if (player.isPlaying()) {
-            player.pause();
+        if (audioPlayer.isPlaying()) {
+            audioPlayer.pause();
         } else {
-            player.resume();
+            audioPlayer.resume();
         }
     }//GEN-LAST:event_jPauseButtonActionPerformed
 
     private void jStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopButtonActionPerformed
         // TODO add your handling code here:
-        player.stop();
+        audioPlayer.stop();
         timer.stop();
+        if (!jPlayButton.isEnabled())
+            jPlayButton.setEnabled(true);
     }//GEN-LAST:event_jStopButtonActionPerformed
 
     private void jPlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayButtonActionPerformed
@@ -734,7 +762,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         String selectedTitle;
         File selectedFile;
         Track t;
-
+        
+  
         if (timer.isRunning()) {
             timer.stop();
         }
@@ -746,8 +775,9 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         i = organizer.getTrack(selectedTitle);
         t = organizer.getTrack(i);
 
-        player.startPlaying(t.getFilename());
-      
+        audioPlayer.startPlaying(t.getFilename());
+        if (audioPlayer.isPlaying())
+            jPlayButton.setEnabled(false);
         temp = player.getLength();
         jProgressBar1.setMaximum(player.getLength());
         jProgressSlider.setMaximum(player.getLength());
@@ -764,11 +794,11 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
         state = source.getValueIsAdjusting();
         //int val = source.getValue();
         timer.stop();
-        player.pause();
+        audioPlayer.pause();
         int val = (int) source.getValue();
         jLabelTime.setText(Integer.toString(val));
-        player.seekTo(val);
-        player.resume();
+        audioPlayer.seekTo(val);
+        audioPlayer.resume();
         timer.start();
 //    if (!source.getValueIsAdjusting()) {
 //        
@@ -790,8 +820,38 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 
     private void jGainSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jGainSliderStateChanged
         // TODO add your handling code here:
+        
       
     }//GEN-LAST:event_jGainSliderStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+               int row, i, temp;
+        String selectedTitle;
+        File selectedFile;
+        Track t;
+
+      
+
+        row = songTable.getSelectedRow();
+        int realColumnIndex = songTable.convertColumnIndexToModel(3);
+
+        selectedTitle = (String) songTable.getValueAt(row, realColumnIndex);
+        i = organizer.getTrack(selectedTitle);
+        t = organizer.getTrack(i);
+
+        audioPlayer.startPlaying(t.getFilename());
+      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (audioPlayer.isPlaying()){
+            audioPlayer.pause();
+        }else{
+            audioPlayer.resume();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void initTable() {
         int n = organizer.getNumberOfTracks();
@@ -998,6 +1058,8 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser FileChooser;
     private javax.swing.JTree directoryTree;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuItem jCreateDBItem;
     private javax.swing.JMenuItem jDeleteMenu;
     private javax.swing.JMenuItem jExitMenu;
