@@ -83,23 +83,34 @@ public class AudioPlayer
      */
     public void resume()
     {
-//        if(player != null) {
-//            Thread playerThread = new Thread() {
-//                public void run()
-//                {
-//                   
-//                        player.resume();
-//                    
-//                }
-//            };
-//            playerThread.setPriority(Thread.MIN_PRIORITY);
-//            playerThread.start();
-//        }
-        if (player != null){
-            player.resume();
+        if(player != null) {
+            Thread playerThread = new Thread() {
+                public void run()
+                {
+                   
+                        player.resume();
+                    
+                }
+            };
+            playerThread.setPriority(Thread.MIN_PRIORITY);
+            playerThread.start();
         }
+    //   if (player != null){
+    //        player.resume();
+    //    }
     }
-    
+     /**
+     * Resume playing following a pause.
+     */
+    public void resume2()
+    {
+        if(player != null) {
+                   
+                        player.resume();
+            
+        }
+   
+    }
     /**
      * Seek to the given position in the current file.
      * The track will be paused as a result of this operation.
@@ -108,16 +119,16 @@ public class AudioPlayer
      */
     public void seekTo(int position)
     {
-//        if(player != null && position >= 0 && position < player.getLength()) {
-//            // Set the player's position.
-//        try {   
-//         player.setPosition(position);
-//        }
-//         catch(JavaLayerException e) {
-//                        reportProblem();
-//                        killPlayer();
-//                    }
-//        }
+        if (player != null && position >= 0 && position < player.getLength()) {
+            // Set the player's position.
+        try {   
+         player.setPosition(position);
+        }
+         catch(JavaLayerException e) {
+                        reportProblem();
+                        killPlayer();
+                    }
+        }
     }
     
     /**
@@ -128,24 +139,24 @@ public class AudioPlayer
      */
     public int getLength()
     {
-//        if(player != null) {
-//            return player.getLength();
-//        }
-//        else {
-//            return 0;
-//        }
-        return 0;
+        if(player != null) {
+            return player.getLength();
+        }
+        else {
+            return 0;
+        }
+
     }
     
     public int getFrame()
     {
-//        if(player != null){
-//            return player.getFrameNumber();
-//        }
-//        else {
-//            return 0;
-//        }
-        return 0;
+        if(player != null){
+            return player.getFrameNumber();
+        }
+        else {
+            return 0;
+        }
+
     }
     
     /**
@@ -214,9 +225,28 @@ public class AudioPlayer
     {
         System.out.println("There was a problem playing: " + filename);
     }
+    public float getPan(){
+        return player.getPan();
+    }
+    public void setPan(float pan){
+        
+        player.setPan(pan);
+    }
     
     public float getGain(){
         return player.getGain();
+    }
+    
+    public void setGain(float val){
+        player.setGain(val);
+}
+    public int getGainMin(){
+        return player.getGainMin();
+    }
+    
+    public int getGainMax(){
+        return player.getGainMax();
+        
     }
 }
 

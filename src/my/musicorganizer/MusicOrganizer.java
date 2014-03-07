@@ -427,7 +427,7 @@ public class MusicOrganizer {
                 for (int i = 1; i <= numberOfColumns; i++) {
                     objData[i - 1] = resultSet.getString(i);
                 }
-                n = Integer.valueOf(objData[4]);
+            //    n = Integer.valueOf(objData[4]);
                 l = Long.valueOf(objData[6]);
                 //newtracks[numberOfTracks] = new Track(objData[2], objData[1], objData[3], objData[4], l, objData[5], objData[7]);
                  Track t = new Track(objData[2], objData[1], objData[3], objData[4], l, objData[5], objData[7]);

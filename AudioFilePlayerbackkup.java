@@ -35,7 +35,6 @@ public class AudioFilePlayer {
     private boolean playing;
     private boolean paused;
     private String filename;
-    private AudioInputStream din;
     private SourceDataLine line;
     private float gain;
     // The position to resume, if any.
@@ -45,7 +44,6 @@ public class AudioFilePlayer {
     // The current frame number.
     private int frameNumber;
     FloatControl volCtrl;
-    FloatControl panCtrl;
 
     public AudioFilePlayer() {
         playing = false;
@@ -75,26 +73,6 @@ public class AudioFilePlayer {
     }
 
     private void openAudio() {
-       final File file = new File(filename);
-
-        try (AudioInputStream in = getAudioInputStream(file)) {
-           // synchronized (this) {
-
-                 AudioFormat outFormat = getOutFormat(in.getFormat());
-                 Info info = new Info(SourceDataLine.class, outFormat);
-                din = getAudioInputStream(outFormat, in);
-                line = (SourceDataLine) AudioSystem.getLine(info);
-
-                if (line != null) {
-                    line.open(outFormat);
-                    volCtrl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-                    panCtrl = (FloatControl) line.getControl(FloatControl.Type.PAN);
-                }
-            //}
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-        
     }
 
     public boolean isPlaying() {
@@ -102,11 +80,6 @@ public class AudioFilePlayer {
     }
 
     public void resume() {
-        try{
-           din.skip(0);
-        }
-        catch(IOException e){}
-        
         synchronized (this) {
             playing = true;
             paused = false;
@@ -134,16 +107,16 @@ public class AudioFilePlayer {
         // filePath = "C:\\Users\\Carol\\Music\\Ana Egge\\River Under the Road\\01 River Under the Road.mp3";
         final File file = new File(filename);
 
-        try  {
+        try (final AudioInputStream in = getAudioInputStream(file)) {
             synchronized (this) {
-                AudioInputStream in = getAudioInputStream(file);
+
                 final AudioFormat outFormat = getOutFormat(in.getFormat());
                 final Info info = new Info(SourceDataLine.class, outFormat);
-                din = getAudioInputStream(outFormat, in);
-         //       line = (SourceDataLine) AudioSystem.getLine(info);
+                AudioInputStream din = getAudioInputStream(outFormat, in);
+                line = (SourceDataLine) AudioSystem.getLine(info);
 
                 if (line != null) {
-                //    line.open(outFormat);
+                    line.open(outFormat);
                     byte[] data = new byte[4096];
                     //line.start();
                     //         stream(getAudioInputStream(outFormat, in), line);
@@ -170,7 +143,7 @@ public class AudioFilePlayer {
                     din.close();
                 }
             }
-        } catch ( UnsupportedAudioFileException | IOException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             throw new IllegalStateException(e);
         }
 
@@ -200,18 +173,6 @@ public class AudioFilePlayer {
         res.open(audioFormat);
         return res;
     }
-     /**
-     * Set the playing position (in frames).
-     * Playing does not start until resume() is called.
-     * @param position The playing position.
-     */
-    public void setPosition(int position) throws JavaLayerException
-    {
-        pause();
-        resumePosition = position;
-    }
-    
-   
 
     protected int getFrameCount(String filename) throws JavaLayerException {
         // openBitstream(filename);
@@ -270,9 +231,8 @@ public int getLength(){
     
     public int getFrameNumber(){
         if (line != null){
-            frameNumber = line.getFramePosition();
-            return frameNumber;
-                    }
+            return line.getFramePosition();
+        }
         return -1;
     }
     
@@ -303,16 +263,6 @@ public int getLength(){
          max = volCtrl.getMaximum();
          val = volCtrl.getValue();
          volCtrl.setValue(gain);
-    }
-    public float getPan(){
-        return panCtrl.getValue();
-    }
-    
-    public void setPan(float pan) {
-        float min = panCtrl.getMinimum();
-        float max = panCtrl.getMaximum();
-        
-        panCtrl.setValue(pan);
     }
 
     public void stop() {
