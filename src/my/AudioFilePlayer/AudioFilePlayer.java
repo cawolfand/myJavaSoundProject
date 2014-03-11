@@ -218,7 +218,7 @@ public class AudioFilePlayer {
         final File file = new File(filename);
 
         try (final AudioInputStream in = getAudioInputStream(file)) {
-            synchronized (this) {
+          //  synchronized (this) {
 
                 final AudioFormat outFormat = getOutFormat(in.getFormat());
                 final Info info = new Info(SourceDataLine.class, outFormat);
@@ -253,7 +253,7 @@ public class AudioFilePlayer {
             //    line.close();
                 din.close();
                 return totalFramesRead;
-            }
+           // }
     }
     catch (UnsupportedAudioFileException  | IOException e
 

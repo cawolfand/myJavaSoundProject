@@ -83,10 +83,19 @@ public class Track {
     public String getFilename(){
         return filename;
     }
-    
-    public String getGenre(){
-        return genre;
+    public int getGenre(){
+               
+        if (genre.contains("(")|| genre.contains(")")){
+            genre.replace("(", "");
+            genre.replace(")", "");
+        }
+      
+        return Integer.getInteger(genre);
     }
+  //  public String getGenre(){
+  //      
+  //      return genre;
+  //  }
     
     public String getField(String field)
     {
