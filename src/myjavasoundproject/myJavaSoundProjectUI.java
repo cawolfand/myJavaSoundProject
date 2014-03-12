@@ -905,13 +905,14 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
 
         for (int i = 1; i < n; i++) {
             t = organizer.getTrack(i);
-           g.getGenre(t.getGenre());
+         //    g.getGenre(t.getGenre());
             myDefaultTableModel.addRow(new Object[]{t.getAlbum(),
                 t.getArtist(),
                 t.getTitle(),
                 t.getTrackNum(),
                 t.getLength(),
-               g.getGenre(t.getGenre()) != null ? null : g }
+                t.getGenre()}
+            //   g.getGenre(t.getGenre()) != null ? null : g }
                     );
 
         }
@@ -992,7 +993,7 @@ public class myJavaSoundProjectUI extends javax.swing.JFrame
             songTable.setValueAt(t.getTitle(), i, 3);
             songTable.setValueAt(t.getLength(), i, 4);
             
-            songTable.setValueAt(genre.getGenre(t.getGenre()),i,5);
+            songTable.setValueAt(t.getGenre(),i,5);
 
 
         }

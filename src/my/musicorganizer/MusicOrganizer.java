@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import my.genre.Genre;
 import my.track.Track;
 import my.trackreader.TrackReader;
 
@@ -316,12 +317,16 @@ public class MusicOrganizer {
         int numberOfTracks = 0;
         int n;
         long l;
+        String artist, album, title, track;
+        Genre gen;
+       
         Connection connection = null;
 
         Statement statement = null;
         ResultSet resultSet = null;
         Track[] newtracks;
-        String[] objData = new String[10];
+       // String[] objData = new String[10];
+        Object[] objData = new Object[10];
         //Class.forName("org.sqlite.JDBC");
         try {
             try {
@@ -348,10 +353,12 @@ public class MusicOrganizer {
                 for (int i = 1; i <= numberOfColumns; i++) {
                     objData[i - 1] = resultSet.getString(i);
                 }
-            //    n = Integer.valueOf(objData[4]);
-                l = Long.valueOf(objData[6]);
+                artist = objData[2];
+                album =  objData[1];
+                title = objData[3];
+                l = Long.valueOf((String) objData[6]);
                 //newtracks[numberOfTracks] = new Track(objData[2], objData[1], objData[3], objData[4], l, objData[5], objData[7]);
-                 Track t = new Track(objData[2], objData[1], objData[3], objData[4], l, objData[5], objData[7]);
+                 Track t = new Track(artist, (String)objData[1],(String) objData[3],(String) objData[4], l,(String) objData[5], (Genre) objData[7]);
                 //addTrack(newtracks[numberOfTracks]);
                 addTrack(t);
 

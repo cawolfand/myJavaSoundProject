@@ -21,6 +21,7 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import my.genre.Genre;
 import myjavasoundproject.myJavaSoundProjectUI;
 
 /**
@@ -92,7 +93,9 @@ public class TrackReader
         String t;
         String tracknum = "";
         long length =0;
-        String genre = "";
+        Genre genre = null;
+        String gen=null;
+        
         
         // Look for artist and title in the name of the file.
         String details = file.getName();
@@ -113,7 +116,10 @@ public class TrackReader
         
             if (props.containsKey("mp3.id3tag.track")) tracknum = (String) props.get("mp3.id3tag.track");
             if (props.containsKey("duration"))length = (long) props.get("duration");
-            if (props.containsKey("mp3.id3tag.genre")) genre = (String) props.get("mp3.id3tag.genre");
+            if (props.containsKey("mp3.id3tag.genre")){
+                gen = (String) props.get("mp3.id3tag.genre");
+                genre = new Genre(gen);
+            }
                    
         return new Track(artist, album, title, tracknum, length, file.getAbsolutePath(),genre);
     }

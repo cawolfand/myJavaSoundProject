@@ -11,8 +11,15 @@ import java.util.HashMap;
  * @author Carol
  */
 public class Genre {
+    private int genreType;
     private  HashMap<Integer,String>  genreTypes;
-    
+    public Genre(int gt){
+        this.genreType = gt;
+    }
+    public Genre(String gt){
+        String g = gt.replaceAll("[^0-9]", "");
+        this.genreType = Integer.valueOf(g);
+    }
     public Genre()
     {
        genreTypes = new HashMap<>();
@@ -98,8 +105,11 @@ public class Genre {
 //       genreTypes.put("Hard Rock",HARD_ROCK);
        
     } 
-    public String getGenre(int index){
-        return genreTypes.get(index);
+    public String getGenre(){
+        return genreTypes.get(genreType);
+    }
+    public void setGenre(int index){
+        genreType = index;
     }
  private static final int BLUES = 0;
 private static final int CLASSIC_ROCK = 1;

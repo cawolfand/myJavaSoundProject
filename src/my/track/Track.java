@@ -6,7 +6,7 @@
 package my.track;
 
 
-import java.io.File;
+import my.genre.Genre;
 /**
  *
  * @author Carol
@@ -18,7 +18,7 @@ public class Track {
     private String title;
     private long length;
     private String filename;
-    private String genre;
+    private Genre genre;
     
     public static final String[] FIELDS = {
         "Artist",
@@ -31,7 +31,7 @@ public class Track {
     };
     public Track(){}
     
-    public Track(String artist, String album, String title, String trackNum, long length, String filename, String genre){
+    public Track(String artist, String album, String title, String trackNum, long length, String filename, Genre genre){
         SetDetails(artist, album, title, trackNum, length, filename, genre);
         
     }
@@ -47,7 +47,7 @@ public class Track {
         SetDetails("unknown", "unknown", "unknown", "", 0, filename, genre);
     }
     
-    private void SetDetails(String artist, String album, String title, String trackNum, long length, String filename, String genre){
+    private void SetDetails(String artist, String album, String title, String trackNum, long length, String filename, Genre genre){
         this.artist = artist;
         this.album = album;
         this.title = title;
@@ -83,14 +83,19 @@ public class Track {
     public String getFilename(){
         return filename;
     }
-    public int getGenre(){
-               
-        if (genre.contains("(")|| genre.contains(")")){
-            genre.replace("(", "");
-            genre.replace(")", "");
-        }
-      
-        return Integer.getInteger(genre);
+    public Genre getGenre(){
+ //       Integer i;
+//       if (genre != null){       
+//        if (genre != null && genre.contains("(") || genre.contains(")")  ){
+//            genre.replace("(", "");
+//            genre.replace(")", "");
+//        }
+//        
+//        
+//        return Integer.valueOf(genre);
+//       }
+//       return -1;
+      return genre;
     }
   //  public String getGenre(){
   //      
@@ -118,7 +123,7 @@ public class Track {
             return filename;
         }
         else if (field.equals("Genre")){
-            return genre;
+            return genre.toString();
         }
         else {
             throw new IllegalArgumentException("Unkown field name: " + field);
